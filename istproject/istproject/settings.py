@@ -26,8 +26,9 @@ SECRET_KEY = "django-insecure-%9h@o5r6r@zsdmy%_u$q=p$^r)w&+k$xqh%_wja2&0%0#j+s%w
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
+NPM_BIN_PATH=r"C:\Program Files\nodejs\npm.cmd"
+TAILWIND_APP_NAME = 'theme' # This is the name of the app that will be used to generate the tailwind files
+INTERNAL_IPS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "myapp",
+    "tailwind",
+    "theme",
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +52,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "istproject.urls"
@@ -116,4 +122,4 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 # it will come to know how to add   static folder 
-STATICFILES_DIRS=[os.path.join(BASE_DIR), 'static']
+STATICFILES_DIRS=[os.path.join(BASE_DIR), "static"]
