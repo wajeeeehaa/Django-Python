@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from django.contrib.auth.decorators import login_required 
 from .models import Student
 from .forms import StudentForm
-# Create your views here.
 
 @login_required(login_url='/myapp/login')
 def home(request):
