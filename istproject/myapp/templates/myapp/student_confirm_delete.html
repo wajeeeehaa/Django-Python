@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delete Student</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    h1, h2 { font-family: 'Syne', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="relative w-full max-w-md">
+    <div class="bg-slate-900 border border-slate-700/60 rounded-2xl shadow-2xl p-8 text-center">
+
+      <!-- Warning icon -->
+      <div class="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-6">
+        <svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+        </svg>
+      </div>
+
+      <h2 class="text-2xl font-800 text-white mb-2">Delete Student</h2>
+      <p class="text-slate-400 text-sm mb-2">This action cannot be undone.</p>
+      <p class="text-slate-300 text-sm mb-8">
+        Are you sure you want to delete
+        <span class="text-white font-600">{{ student.name }}</span>?
+      </p>
+
+      <form method="POST" class="flex gap-3">
+        {% csrf_token %}
+        <button type="submit"
+          class="flex-1 bg-red-600 hover:bg-red-500 text-white font-600 py-3 px-4 rounded-xl transition-all duration-200 text-sm shadow-lg shadow-red-600/20">
+          Yes, Delete
+        </button>
+        <a href="/myapp/students/"
+          class="flex-1 py-3 px-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 rounded-xl text-sm font-500 transition-colors text-center">
+          Cancel
+        </a>
+      </form>
+
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Students</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    h1, h2, th { font-family: 'Syne', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-white">
+
+  <!-- Navbar -->
+  <nav class="border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+        </svg>
+      </div>
+      <span class="font-700 text-white text-lg" style="font-family:'Syne',sans-serif;">StudentMS</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="/" class="text-slate-400 hover:text-white text-sm transition-colors">Dashboard</a>
+      <a href="/logout/" class="text-sm bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-4 py-2 rounded-lg transition-colors">Logout</a>
+    </div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto px-6 py-10">
+
+    <!-- Page header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-800 text-white">Students</h1>
+        <p class="text-slate-400 text-sm mt-1">All registered students</p>
+      </div>
+      <a href="/students/create/"
+        class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-600 transition-all shadow-lg shadow-indigo-600/30 flex items-center gap-2">
+        <span>+</span> Add Student
+      </a>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-slate-900 border border-slate-700/60 rounded-2xl overflow-hidden">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-700/60">
+            <th class="text-left text-xs text-slate-400 uppercase tracking-widest px-6 py-4 font-600">Name</th>
+            <th class="text-left text-xs text-slate-400 uppercase tracking-widest px-6 py-4 font-600">Age</th>
+            <th class="text-left text-xs text-slate-400 uppercase tracking-widest px-6 py-4 font-600">Email</th>
+            <th class="text-left text-xs text-slate-400 uppercase tracking-widest px-6 py-4 font-600">Grade</th>
+            <th class="text-left text-xs text-slate-400 uppercase tracking-widest px-6 py-4 font-600">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+          <tr class="border-b border-slate-800 hover:bg-slate-800/40 transition-colors">
+            <td class="px-6 py-4 text-white font-500">{{ student.name }}</td>
+            <td class="px-6 py-4 text-slate-300">{{ student.age }}</td>
+            <td class="px-6 py-4 text-slate-300">{{ student.email }}</td>
+            <td class="px-6 py-4">
+              <span class="bg-indigo-600/20 text-indigo-300 text-xs font-600 px-3 py-1 rounded-full border border-indigo-500/30">
+                {{ student.grade }}
+              </span>
+            </td>
+            <td class="px-6 py-4 flex items-center gap-3">
+              <a href="/students/update/{{ student.id }}/"
+                class="text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3 py-1.5 rounded-lg transition-colors">
+                Edit
+              </a>
+              <a href="/students/delete/{{ student.id }}/"
+                class="text-xs text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 px-3 py-1.5 rounded-lg transition-colors">
+                Delete
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="px-6 py-16 text-center text-slate-500">
+              <div class="flex flex-col items-center gap-3">
+                <svg class="w-10 h-10 text-slate-700" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>
+                </svg>
+                <p class="text-sm">No students yet.</p>
+                <a href="/students/create/" class="text-indigo-400 hover:text-indigo-300 text-sm transition-colors">Add your first student →</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+</body>
+</html>

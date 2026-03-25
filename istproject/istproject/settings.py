@@ -123,3 +123,5 @@ USE_TZ = True
 STATIC_URL = "static/"
 # it will come to know how to add   static folder 
 STATICFILES_DIRS=[os.path.join(BASE_DIR), "static"]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
