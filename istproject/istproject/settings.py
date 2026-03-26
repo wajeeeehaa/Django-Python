@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     'django_browser_reload',
+    "students",
 ]
 
 MIDDLEWARE = [
@@ -80,8 +81,12 @@ WSGI_APPLICATION = "istproject.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':  'studentmanagement',
+        'USER': 'postgres',
+        'PASSWORD': '12345',
+        'HOST': 'localhost', # Usually localhost if running locally
+        'PORT': '5432',      # Default Postgres port
     }
 }
 
@@ -104,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+AUTH_USER_MODEL = 'students.CustomUser'
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
