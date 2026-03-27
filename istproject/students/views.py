@@ -23,6 +23,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            # Redirect everyone to student dashboard (superusers can access admin from there)
             return redirect('student_dashboard')
     else:
         form = EmailAuthenticationForm()
@@ -81,3 +82,40 @@ def create_course_view(request):
     else:
         form = CourseForm()
     return render(request, "students/create_course.html", {"form": form})
+
+@user_passes_test(check_if_instructor, login_url='login')
+def manage_courses_view(request):
+    """Admin view to see all courses with edit/delete options"""
+    all_courses = Course.objects.all()
+    context = {
+        'courses': all_courses,
+    }
+    return render(request, "students/manage_courses.html", context)
+
+@user_passes_test(check_if_instructor, login_url='login')
+def edit_course_view(request, course_id):
+    """Admin view to edit a course"""
+    course = Course.objects.get(id=course_id)
+    
+    if request.method == "POST":
+        form = CourseForm(request.POST, instance=course)
+        if form.is_valid():
+            updated_course = form.save(commit=False)
+            updated_course.full_clean()
+            updated_course.save()
+            return redirect("manage_courses")
+    else:
+        form = CourseForm(instance=course)
+    
+    return render(request, "students/edit_course.html", {"form": form, "course": course})
+
+@user_passes_test(check_if_instructor, login_url='login')
+def delete_course_view(request, course_id):
+    """Admin view to delete a course"""
+    course = Course.objects.get(id=course_id)
+    
+    if request.method == "POST":
+        course.delete()
+        return redirect("manage_courses")
+    
+    return render(request, "students/delete_course.html", {"course": course})

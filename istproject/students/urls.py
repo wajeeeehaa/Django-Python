@@ -12,6 +12,9 @@ urlpatterns = [
     path('catalog/', views.course_catalog, name='course_catalog'),
     path('enroll/<int:course_id>/', views.enroll_course, name='enroll_course'),
     
-    # Instructor Page
+    # Instructor Pages
     path('create-course/', views.create_course_view, name='create_course'),
+    path('manage-courses/', views.manage_courses_view, name='manage_courses'),
+    path('edit-course/<int:course_id>/', views.edit_course_view, name='edit_course'),
+    path('delete-course/<int:course_id>/', views.delete_course_view, name='delete_course'),
 ]
