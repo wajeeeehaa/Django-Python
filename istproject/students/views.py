@@ -76,7 +76,7 @@ def create_course_view(request):
         form = CourseForm(request.POST)
         if form.is_valid():
             course = form.save(commit=False)
-            course.full_clean()  # Run model validation
+            course.full_clean()  
             course.save()
             return redirect("course_catalog")
     else:
