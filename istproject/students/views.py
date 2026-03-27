@@ -23,7 +23,6 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            # Redirect everyone to student dashboard (superusers can access admin from there)
             return redirect('student_dashboard')
     else:
         form = EmailAuthenticationForm()
@@ -58,9 +57,9 @@ def enroll_course(request, course_id):
         selected_course = Course.objects.get(id=course_id)
         current_student, created = Student.objects.get_or_create(user=request.user)
         
-        # Assign the course and save to the database
+        
         current_student.course = selected_course
-        current_student.full_clean()  # Run model validation
+        current_student.full_clean()  
         current_student.save() 
         
         return redirect("student_dashboard")
