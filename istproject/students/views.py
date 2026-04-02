@@ -2,16 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CustomSignupForm , CourseForm, EmailAuthenticationForm
-from .models import Student, Course
+from .models import CustomUser, Course
 
 def signup(request):
     if request.method == "POST":
         form = CustomSignupForm(request.POST)
         if form.is_valid():
             new_user = form.save()
-            student = Student(user=new_user)
-            student.full_clean()  # Run model validation
-            student.save()
             return redirect("login")
     else:
         form = CustomSignupForm()
@@ -37,12 +34,9 @@ def logout_view(request):
 
 @login_required(login_url='login')
 def student_dashboard(request):
-    # Get or create Student profile for the user
-    current_student, created = Student.objects.get_or_create(user=request.user)
-    enrolled_course = current_student.course
+    enrolled_courses = request.user.courses.all()
     context = {
-        'student': current_student,
-        'course': enrolled_course,
+        'courses': enrolled_courses,
     }
     return render(request, "students/dashboard.html", context)
 
@@ -56,19 +50,14 @@ def course_catalog(request):
 def enroll_course(request, course_id):
     if request.method == "POST":
         selected_course = Course.objects.get(id=course_id)
-        current_student, created = Student.objects.get_or_create(user=request.user)
-        
-        
-        current_student.course = selected_course
-        current_student.full_clean()  
-        current_student.save() 
+        request.user.courses.add(selected_course)
         
         return redirect("student_dashboard")
     return redirect("course_catalog")
 
 
 def check_if_instructor(user):
-    return user.is_staff
+    return user.role == 'instructor' or user.is_staff
 
 @user_passes_test(check_if_instructor, login_url='login')
 def create_course_view(request):

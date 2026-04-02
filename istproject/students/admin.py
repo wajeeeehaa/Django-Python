@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import CustomUser, Student, Course
+from .models import CustomUser, Course
 
 # Register CustomUser normally
 admin.site.register(CustomUser)
@@ -12,7 +12,4 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ('title', 'description') 
     search_fields = ('title',)
 
-@admin.register(Student)
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'course') 
-    list_filter = ('course',) 
+ 

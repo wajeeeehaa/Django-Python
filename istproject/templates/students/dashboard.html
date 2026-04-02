@@ -25,7 +25,7 @@
     <div class="bg-slate-900 border border-slate-700/60 rounded-2xl shadow-lg p-6 flex justify-between items-center">
       <div>
         <h2 class="text-2xl font-800 text-white tracking-tight">{{ user.is_staff|yesno:"Admin Dashboard,Student Dashboard" }}</h2>
-        <p class="text-slate-400 text-sm mt-1">Welcome back, {{ student.user.first_name }}!</p>
+        <p class="text-slate-400 text-sm mt-1">Welcome back, {{ user.first_name }}!</p>
       </div>
       
       <div class="flex gap-3">
@@ -51,7 +51,9 @@
     <div class="bg-slate-900 border border-slate-700/60 rounded-2xl shadow-2xl p-8">
       <h3 class="text-lg font-700 text-white mb-6 border-b border-slate-700/60 pb-4">My Enrollment</h3>
       
-      {% if course %}
+      {% if courses %}
+        <div class="grid gap-6">
+        {% for course in courses %}
         <div class="bg-slate-800/50 rounded-xl p-6 border border-indigo-500/20">
             <div class="flex items-start justify-between">
                 <div>
@@ -66,6 +68,8 @@
             <button class="mt-6 bg-indigo-600 hover:bg-indigo-500 text-white font-600 py-2 px-6 rounded-lg transition-all text-sm shadow-lg shadow-indigo-600/20">
                 Continue Learning →
             </button>
+        </div>
+        {% endfor %}
         </div>
       {% else %}
         <div class="text-center py-10">

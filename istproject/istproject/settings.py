@@ -110,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'students.CustomUser'
+# AUTH_USER_MODEL = 'bugzilla.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
     'students.backends.EmailBackend',  # Custom backend allows email login

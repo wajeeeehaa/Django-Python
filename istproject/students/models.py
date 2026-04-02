@@ -6,8 +6,16 @@ from django.core.validators import MinLengthValidator
 
 # Create your models here.
 class CustomUser(AbstractUser):
+    ROLE_CHOICES = (
+        ('student', 'Student'),
+        # ('instructor', 'Instructor'),
+        ('admin', 'Admin'),
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
+    
     #custom user contains first name, last name, email, password, username
     address = models.CharField(max_length=255, blank=True, null=True)
+    courses = models.ManyToManyField('Course', related_name='students', blank=True)
     
     def clean(self):
         """Validate CustomUser fields"""
@@ -39,17 +47,3 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
-class Student(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # OneToOneField is exactly how we link a student profile to a single authentication account,
-    # and ForeignKey is the perfect "ticket" for a One-to-Many relationship.
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
-    
-    def clean(self):
-        """Validate Student fields"""
-        super().clean()
-        if not self.user:
-            raise ValidationError({'user': 'A student must be associated with a user account.'})
-    
-    def __str__(self):
-        return self.user.username
