@@ -230,3 +230,20 @@ class EmailAuthenticationForm(AuthenticationForm):
             self.user_cache = user
         
         return self.cleaned_data
+
+
+class StudentCourseSelectionForm(forms.Form):
+    """Form for students to select multiple courses to enroll in"""
+    courses = forms.ModelMultipleChoiceField(
+        queryset=Course.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        help_text="Select one or more courses to enroll in."
+    )
+    
+    def clean_courses(self):
+        """Validate courses selection"""
+        courses = self.cleaned_data.get('courses')
+        if not courses:
+            raise ValidationError("Please select at least one course to enroll in.")
+        return courses

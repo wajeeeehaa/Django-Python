@@ -49,7 +49,12 @@
 
 {% if not user.is_staff %}
     <div class="bg-slate-900 border border-slate-700/60 rounded-2xl shadow-2xl p-8">
-      <h3 class="text-lg font-700 text-white mb-6 border-b border-slate-700/60 pb-4">My Enrollment</h3>
+      <div class="flex justify-between items-center mb-6 border-b border-slate-700/60 pb-4">
+        <h3 class="text-lg font-700 text-white">My Enrollment</h3>
+        <a href="{% url 'select_courses' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-600 py-2 px-4 rounded-lg transition-all text-sm border border-indigo-500 hover:border-indigo-400">
+          + Add More Courses
+        </a>
+      </div>
       
       {% if courses %}
         <div class="grid gap-6">

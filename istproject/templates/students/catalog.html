@@ -22,9 +22,14 @@
 
   <div class="relative w-full max-w-5xl mx-auto space-y-8">
 
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-800 text-white tracking-tight mb-3">Course Catalog</h2>
-      <p class="text-slate-400">Expand your knowledge. Select a course to begin.</p>
+    <div class="flex items-center justify-between mb-12">
+      <div class="text-center flex-1">
+        <h2 class="text-3xl font-800 text-white tracking-tight mb-3">Course Catalog</h2>
+        <p class="text-slate-400">Expand your knowledge. Select a course to begin.</p>
+      </div>
+      <a href="{% url 'select_courses' %}" class="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white font-600 py-3 px-6 rounded-xl transition-all duration-200 text-sm tracking-wide border border-indigo-500 hover:border-transparent whitespace-nowrap">
+        Select Multiple →
+      </a>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

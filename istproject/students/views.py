@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import CustomSignupForm , CourseForm, EmailAuthenticationForm
+from .forms import CustomSignupForm , CourseForm, EmailAuthenticationForm, StudentCourseSelectionForm
 from .models import CustomUser, Course
 
 def signup(request):
@@ -108,3 +108,26 @@ def delete_course_view(request, course_id):
         return redirect("manage_courses")
     
     return render(request, "students/delete_course.html", {"course": course})
+
+
+@login_required(login_url='login')
+def select_multiple_courses(request):
+    """View for students to select and enroll in multiple courses at once"""
+    if request.method == "POST":
+        form = StudentCourseSelectionForm(request.POST)
+        if form.is_valid():
+            selected_courses = form.cleaned_data['courses']
+            # Add all selected courses to the user's enrollment
+            for course in selected_courses:
+                request.user.courses.add(course)
+            return redirect('student_dashboard')
+    else:
+        form = StudentCourseSelectionForm()
+    
+    # Get courses already enrolled in
+    enrolled_course_ids = request.user.courses.values_list('id', flat=True)
+    # Filter out already enrolled courses from the form queryset
+    form.fields['courses'].queryset = Course.objects.exclude(id__in=enrolled_course_ids)
+    
+    context = {'form': form}
+    return render(request, 'students/select_courses.html', context)
